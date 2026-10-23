@@ -1,0 +1,166 @@
+<!doctype html>
+<html lang="pl">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Yng M1k0cz4n</title>
+    <!-- Ikony Font Awesome -->
+    <link
+      rel="stylesheet"
+      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+    />
+    <link rel="stylesheet" href="/css/style.css" />
+    <script src="/js/app.js" defer></script>
+    <!-- Ikona strony (Favicon) -->
+    <link rel="icon" type="image/jpeg" href="/resources/pfp.jpg" />
+
+    <!-- Podstawowe meta tagi SEO -->
+    <meta name="author" content="Yng M1k0cz4n" />
+    <meta
+      name="description"
+      content="Oficjalny profil Yng M1k0cz4n – Programmer, Gamer & Anime enthusiast, Student."
+    />
+    <meta
+      name="keywords"
+      content="Yng M1k0cz4n, programmer, programista, anime, gaming, portfolio, C++, Java"
+    />
+
+    <!-- Podgląd w social media (Open Graph / Discord / Messenger) -->
+    <meta property="og:type" content="website" />
+    <meta property="og:title" content="Yng M1k0cz4n" />
+    <meta
+      property="og:description"
+      content="Programmer ● Gamer & Anime ● Student"
+    />
+    <meta property="og:image" content="resources/pfp.jpg" />
+    <meta name="theme-color" content="#171b2b" />
+  </head>
+  <body data-mode="dark">
+    <!-- Ekran powitalny wymuszający pierwszą interakcję -->
+    <div id="enter-overlay" class="enter-overlay">
+      <div class="enter-text">Kliknij, aby wejść</div>
+    </div>
+    <!-- Wideo i audio w tle -->
+    <div class="wrapper">
+      <video
+        class="video"
+        src="/resources/site-background-video.mp4"
+        autoplay
+        muted
+        loop
+        playsinline
+      ></video>
+      <audio id="bg-audio" src="/resources/jedendzien.mp3" loop></audio>
+    </div>
+
+    <div class="changeMode">
+      <button class="modeBtn" onclick="changeMode()">
+        <i class="fa-solid fa-moon modeIcon"></i>
+      </button>
+    </div>
+
+    <main>
+      <section class="panel">
+        <!-- Górna sekcja: Profil + Social Media (4 przyciski: 2x2) -->
+        <header class="profile-header">
+          <div class="pfp-info">
+            <img
+              src="/resources/pfp.jpg"
+              alt="Zdjęcie profilowe"
+              class="avatar"
+            />
+            <h1 class="pulse">Yng M1k0cz4n</h1>
+            <p class="subtitle">Programmer ● Gamer & Anime ● Student</p>
+          </div>
+
+          <nav class="social-links">
+            <a
+              href="#"
+              class="social-btn discord-btn"
+              data-copy="young_mikoczan"
+            >
+              <i class="fa-brands fa-discord"></i>
+              <span>young_mikoczan</span>
+            </a>
+            <a
+              href="https://github.com/mikoczanmx"
+              class="social-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-github"></i>
+              <span>GitHub</span>
+            </a>
+            <a
+              href="https://open.spotify.com/artist/4nfb9GDHMiuWe4a82IqnLZ"
+              class="social-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-spotify"></i>
+              <span>Spotify</span>
+            </a>
+            <a
+              href="https://steamcommunity.com/id/yngmikoczan/"
+              class="social-btn"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i class="fa-brands fa-steam"></i>
+              <span>Steam</span>
+            </a>
+          </nav>
+        </header>
+
+        <!-- Środkowa sekcja: Karty -->
+        <div class="cards-grid">
+          <article class="element">
+            <h2>Pasja</h2>
+            <p>
+              Moja pasja to programowanie (C++, Java)<br />oraz tworzenie muzyki
+              w DAW.
+            </p>
+          </article>
+
+          <article class="element">
+            <h2>Gry & Anime</h2>
+            <p>
+              Sporadycznie gram w gry takie jak CS2 i Minecraft.<br />Jestem
+              wielkim fanem Anime.
+            </p>
+          </article>
+
+          <article class="element">
+            <h2>Edukacja</h2>
+            <p>
+              ZSEH "Ekonom" Kołobrzeg, technik Programista.<br />Przygotowuję
+              się do egzaminów.
+            </p>
+          </article>
+        </div>
+
+        <!-- Dolna kontrolka: Mini odtwarzacz -->
+        <div class="music-player">
+          <div class="music-info">
+            <i class="fa-solid fa-music music-note-icon"></i>
+            <p class="song-title">Cheatz – jeden dzien</p>
+          </div>
+          <button
+            id="play-pause-btn"
+            class="player-btn"
+            aria-label="Odtwórz lub wstrzymaj"
+          >
+            <i class="fa-solid fa-pause"></i>
+          </button>
+        </div>
+      </section>
+    </main>
+
+    <!-- Wklej to na samym dole strony przed </body> -->
+    <div id="toast" class="toast">
+      <i class="fa-solid fa-check"></i>
+      <span>Skopiowano do schowka!</span>
+    </div>
+    <div class="spotlight"></div>
+  </body>
+</html>

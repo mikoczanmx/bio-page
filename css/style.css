@@ -1,0 +1,494 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito+Sans:ital,opsz,wght@0,6..12,200..1000;1,6..12,200..1000&display=swap");
+
+/* ===================================================
+   PALETY ZMIENNYCH
+=================================================== */
+
+:root,
+[data-mode="dark"] {
+  --bg-body: #000000;
+  --text-main: #dfdfdf;
+  --text-sub: #aeb4c7;
+
+  /* Panele */
+  --panel-bg: rgba(23, 27, 43, 0.85);
+  --panel-border: #23293d;
+  --item-bg: #0d1017;
+  --item-border: #222738;
+  --item-hover-bg: #141924;
+  --avatar-border: #2e354e;
+
+  /* Akcenty */
+  --accent-color: #3663db;
+  --accent-hover: #4972e4;
+  --accent-text: #ffffff;
+  --accent-subtext: #f0f2f8;
+  --card-shadow: rgba(0, 0, 0, 0.4);
+
+  /* Elementy UI */
+  --icon-muted: #8b9bb4;
+  --icon-hover: #ffffff;
+  --player-btn-bg: #171b2b;
+  --player-btn-hover: #23293d;
+
+  /* Filtr wideo */
+  --video-filter: contrast(110%) brightness(50%) blur(12px);
+  --overlay-bg: #000000;
+  --overlay-text: #dfdfdf;
+
+  /* Przycisk trybu */
+  --mode-btn-bg: #171b2b;
+  --mode-btn-color: #dfdfdf;
+  --mode-btn-border: #3663db;
+
+  --spotlight-color: rgba(54, 99, 219, 0.18);
+}
+
+[data-mode="light"] {
+  --bg-body: #f4f6fa;
+  --text-main: #182030;
+  --text-sub: #5c687e;
+
+  /* Panele */
+  --panel-bg: rgba(255, 255, 255, 0.88);
+  --panel-border: #dbe3f0;
+  --item-bg: #f8fafc;
+  --item-border: #dbe3f0;
+  --item-hover-bg: #edf2fc;
+  --avatar-border: #cbd5e1;
+
+  /* Akcenty */
+  --accent-color: #3663db;
+  --accent-hover: #2b52bf;
+  --accent-text: #ffffff;
+  --accent-subtext: #f0f4ff;
+  --card-shadow: rgba(54, 99, 219, 0.15);
+
+  /* Elementy UI */
+  --icon-muted: #64748b;
+  --icon-hover: #3663db;
+  --player-btn-bg: #ffffff;
+  --player-btn-hover: #edf2fc;
+
+  /* Filtr wideo dla jasnego trybu */
+  --video-filter: contrast(100%) brightness(85%) blur(14px);
+  --overlay-bg: #ffffff;
+  --overlay-text: #182030;
+
+  /* Przycisk trybu */
+  --mode-btn-bg: #ffffff;
+  --mode-btn-color: #3663db;
+  --mode-btn-border: #3663db;
+
+  --spotlight-color: rgba(54, 99, 219, 0.25);
+}
+
+/* ===================================================
+   STYLE GŁÓWNE
+=================================================== */
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+  font-family: "Nunito Sans", sans-serif;
+}
+
+body {
+  /* Tło jest pod wideo jako bezpieczny fallback */
+  background-color: var(--bg-body);
+  color: var(--text-main);
+  min-height: 100vh;
+  overflow-x: hidden;
+  transition:
+    background-color 0.35s ease,
+    color 0.35s ease;
+}
+
+/* Płynne przejścia */
+.panel,
+.social-btn,
+.player-btn,
+.music-player,
+.element,
+.changeMode button,
+.modeBtn {
+  transition:
+    background-color 0.35s ease,
+    border-color 0.35s ease,
+    color 0.35s ease,
+    box-shadow 0.35s ease,
+    transform 0.2s ease;
+}
+
+/* Wideo w tle: z-index: 0 zapobiega chowaniu się pod tłem body */
+.wrapper {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  overflow: hidden;
+  pointer-events: none; /* Kliknięcia przechodzą przez wideo */
+}
+
+.video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transform: scale(1.18); /* Powiększenie ucina rozmyte krawędzie */
+  filter: var(--video-filter);
+  transition: filter 0.35s ease;
+}
+
+/* Treść strony leży nad wideo */
+main {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 100vh;
+  padding: 30px 16px;
+}
+
+/* Karta profilowa */
+.panel {
+  background-color: var(--panel-bg);
+  border: 2px solid var(--panel-border);
+  border-radius: 24px;
+  width: 100%;
+  max-width: 480px;
+  padding: 32px 24px;
+  backdrop-filter: blur(8px);
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+/* Profil */
+.profile-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 20px;
+  width: 100%;
+}
+
+.pfp-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  gap: 8px;
+}
+
+.avatar {
+  width: 150px;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 18%;
+  margin-bottom: 6px;
+  border: 2px solid var(--avatar-border);
+  transition: border-color 0.35s ease;
+}
+
+h1 {
+  font-size: 30px;
+  line-height: 1.2;
+}
+
+.subtitle {
+  font-size: 14px;
+  color: var(--text-sub);
+}
+
+/* Social media */
+.social-links {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 10px;
+  width: 100%;
+}
+
+.social-btn {
+  display: flex;
+  align-items: center;
+  justify-content: flex-start;
+  gap: 10px;
+  background-color: var(--item-bg);
+  color: var(--text-main);
+  text-decoration: none;
+  font-size: 14px;
+  font-weight: 600;
+  padding: 10px 14px;
+  border-radius: 10px;
+  border: 2px solid var(--item-border);
+}
+
+.social-btn i {
+  font-size: 16px;
+  color: var(--icon-muted);
+  width: 18px;
+  text-align: center;
+  transition: color 0.2s ease-in-out;
+}
+
+.social-btn:hover {
+  background-color: var(--item-hover-bg);
+  border-color: var(--accent-color);
+  transform: translateY(-2px);
+}
+
+.social-btn:hover i {
+  color: var(--icon-hover);
+}
+
+/* Karty */
+.cards-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+  width: 100%;
+}
+
+.element {
+  background-color: var(--accent-color);
+  border-radius: 12px;
+  padding: 16px 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  box-shadow: 0 4px 15px var(--card-shadow);
+}
+
+.element h2 {
+  font-size: 18px;
+  color: var(--accent-text);
+}
+
+.element p {
+  font-size: 13.5px;
+  line-height: 1.5;
+  color: var(--accent-subtext);
+}
+
+/* Muzyka */
+.music-player {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  background-color: var(--item-bg);
+  border: 2px solid var(--item-border);
+  border-radius: 12px;
+  padding: 10px 16px;
+  margin-top: 4px;
+}
+
+.music-info {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  overflow: hidden;
+}
+
+.music-note-icon {
+  color: var(--accent-color);
+  font-size: 14px;
+}
+
+.song-title {
+  font-size: 13.5px;
+  font-weight: 600;
+  color: var(--text-main);
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+
+.player-btn {
+  background-color: var(--player-btn-bg);
+  border: 2px solid var(--item-border);
+  color: var(--text-main);
+  width: 36px;
+  height: 36px;
+  border-radius: 50%;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+}
+
+.player-btn i {
+  font-size: 13px;
+  color: var(--icon-muted);
+  transition: color 0.2s ease-in-out;
+}
+
+.player-btn:hover {
+  background-color: var(--player-btn-hover);
+  border-color: var(--accent-color);
+  transform: scale(1.05);
+}
+
+.player-btn:hover i {
+  color: var(--icon-hover);
+}
+
+/* Ekran powitalny */
+.enter-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: var(--overlay-bg);
+  z-index: 9999;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  transition:
+    opacity 0.5s ease,
+    visibility 0.5s ease,
+    background-color 0.35s ease;
+}
+
+.enter-overlay.hidden {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
+
+.enter-text {
+  font-size: 20px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: var(--overlay-text);
+  text-transform: uppercase;
+  animation: pulse 1.5s infinite;
+}
+
+.pulse {
+  animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 0.4;
+  }
+  50% {
+    opacity: 1;
+  }
+}
+
+/* ===================================================
+   PRZYCISK PRZEŁĄCZANIA TRYBU
+=================================================== */
+.changeMode button,
+.modeBtn {
+  width: 40px;
+  height: 40px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-radius: 12px;
+  background-color: var(--mode-btn-bg);
+  color: var(--mode-btn-color);
+  border: 2px solid var(--mode-btn-border);
+  position: fixed;
+  left: 20px;
+  top: 20px;
+  z-index: 10000; /* Zawsze na samej górze */
+  cursor: pointer;
+  outline: none;
+}
+
+/* Tylko powiększenie (scale), bez obracania (rotate) */
+.changeMode button:hover,
+.modeBtn:hover {
+  border-color: var(--accent-hover);
+  transform: scale(1.08);
+}
+
+.changeMode button:active,
+.modeBtn:active {
+  transform: scale(0.95);
+}
+
+.changeMode button i,
+.changeMode button svg,
+.modeBtn i,
+.modeBtn svg {
+  font-size: 16px;
+  pointer-events: none; /* Kliknięcie zawsze trafia bezpośrednio w przycisk */
+}
+/* ===================================================
+   POWIADOMIENIE TOAST (KOPIOWANIE DO SCHOWKA)
+=================================================== */
+.toast {
+  position: fixed;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%) translateY(25px);
+  background-color: var(--panel-bg);
+  border: 2px solid var(--accent-color);
+  color: var(--text-main);
+  padding: 8px 24px;
+  border-radius: 50px;
+  font-size: 14px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(12px);
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+  z-index: 10000;
+  transition: all 0.35s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Stan aktywny - wyskakuje z dołu */
+.toast.show {
+  opacity: 1;
+  visibility: visible;
+  transform: translateX(-50%) translateY(0);
+}
+
+.toast i {
+  color: var(--accent-color);
+  font-size: 16px;
+}
+/* ===================================================
+   EFEKT SPOTLIGHT (POŚWIATA CAŁEJ STRONY)
+=================================================== */
+.spotlight {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100vh;
+  /* pointer-events: none jest kluczowe – kliknięcia przechodzą normalnie do przycisków */
+  pointer-events: none;
+  /* z-index: 2 stawia poświatę nad wideo i panelem, ale pod przyciskiem modeBtn */
+  z-index: 2;
+  background: radial-gradient(
+    650px circle at var(--mouse-x, -1000px) var(--mouse-y, -1000px),
+    var(--spotlight-color),
+    transparent 75%
+  );
+  opacity: 0;
+  transition: opacity 0.4s ease;
+}
+
+/* Pokazuje poświatę dopiero po ruszeniu myszką */
+body.has-mouse .spotlight {
+  opacity: 1;
+}
+
+/* Na telefonach/ekranach dotykowych efekt jest ukryty, by nie zawieszał się w jednym punkcie */
+@media (hover: none) {
+  .spotlight {
+    display: none;
+  }
+}
